@@ -19,3 +19,16 @@
 </div>
     <button class="button is-primary">Confirmer</button>
 </form>
+
+
+<?php 
+/*
+    $sql = "SELECT * FROM `bp_users`";
+    $rq = $connect->query($sql);
+    $nb_news = $rq->num_rows;
+    while($one_news = $rq->fetch_object()) :
+      $allNews[] = $one_news;
+  endwhile;
+  myPrint_r($allNews)
+  */
+?>
