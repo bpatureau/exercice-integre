@@ -1,4 +1,6 @@
+
 <?php
+/*voir les utilisateurs enregistré. C'était pas demandé mais j'avais envie de le faire*/
     require("config.php");
     $sql = "SELECT * FROM `bp_users`";
     $rq = $connect->query($sql);
@@ -6,4 +8,4 @@
     while($one_news = $rq->fetch_object()) :
       $allNews[] = $one_news;
   endwhile;
-  myPrint_r($allNews);
+  myPrint_r($allNews);?>

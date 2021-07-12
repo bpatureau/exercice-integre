@@ -12,6 +12,7 @@
 <div class="field complement">
 
 </div>
+<ul class="list_qui hidden"></ul>
     <input type="hidden" name="add_user">
     <button class="button is-primary">Confirmer</button>
 </form>
