@@ -8,7 +8,7 @@ define('MODE','dev'); // dev ou prod
 
 define('ROOT', 'http://localhost/exercice-integre');
 
-//define('REFERANT', $_SERVER['HTTP_REFERER']);
+define('REFERANT', $_SERVER['HTTP_REFERER']);
 
 $connect = @new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
@@ -24,5 +24,5 @@ session_start();
 
 include('functions.php');
 
-myPrint_r($connect);
+//myPrint_r($connect);
 ?>

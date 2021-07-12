@@ -1,34 +1,33 @@
-<form method="post" action="form.php">
+<form method="post" action="form">
 <div class="field">
-  <label class="label">Nom</label>
+  <label class="label">raison de votre visite</label>
   <div class="control">
-    <input class="input" name="nom" type="text" placeholder="Nom">
+    <select name="raison" id="raison">
+      <option value="selectionnez">selectionnez</option>
+      <option value="formation">Suivre une formation</option>
+      <option value="Rdv">Rendez-vous avec un membre du personnel</option>
+    </select>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">qui souhaitez vous rencontrer</label>
+  <div class="control">
+    <input class="input" name="qui" type="text" placeholder="Adam Smith">
   </div>
 </div>
 <div class="field">
-  <label class="label">prenom</label>
+  <label class="label">Formation que vous suivez</label>
   <div class="control">
-    <input class="input" name="prenom" type="text" placeholder="Prenom">
+  <select name="formation" id="raison">
+      <option value="ux">UX/UI les bests</option>
+      <option value="front">Front-end les boss</option>
+      <option value="back">back-end les buses</option>
+    </select>
   </div>
 </div>
-<div class="field">
-  <label class="label">email</label>
-  <div class="control">
-    <input class="input" name="email" type="email" placeholder="exemple@test.be">
-  </div>
-</div>
+
+    <input type="hidden" name="add_user">
     <button class="button is-primary">Confirmer</button>
 </form>
-
-
-<?php 
-/*
-    $sql = "SELECT * FROM `bp_users`";
-    $rq = $connect->query($sql);
-    $nb_news = $rq->num_rows;
-    while($one_news = $rq->fetch_object()) :
-      $allNews[] = $one_news;
-  endwhile;
-  myPrint_r($allNews)
-  */
-?>
+<script src="script/form.js"></script>
