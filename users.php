@@ -1,4 +1,3 @@
-
 <?php
 /*voir les utilisateurs enregistré. C'était pas demandé mais j'avais envie de le faire*/
     require("config.php");
@@ -8,4 +7,9 @@
     while($one_news = $rq->fetch_object()) :
       $allNews[] = $one_news;
   endwhile;
-  myPrint_r($allNews);?>
+
+  foreach($allNews as $key => $value): 
+  echo "<p>$value->nom | $value->prenom | $value->email</p>";
+  
+  endforeach;
+  ?>

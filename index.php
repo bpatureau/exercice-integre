@@ -11,5 +11,6 @@
 else :
     include("home.php");
 endif;?>
+
 <?php include("footer.php");?>
 <?php include "debug.php";?>

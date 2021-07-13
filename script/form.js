@@ -4,27 +4,37 @@ let complement = document.querySelector(".complement")
 //si il y a un changement dans l'input des raisons de visite, affiche la deuxième partie du formualaire qui correspond
 form.addEventListener("change", e => {
   e.preventDefault;
+  list_qui.innerHTML= ''
   if(e.target.classList.contains("form_raison")){
     if(e.target.value == "formation"){
-      complement.innerHTML = 
-      `
-      <label class="label">Qui souhaitez vous rencontrer</label>
-      <div class="control">
-        <input class="input" name="qui" type="text" placeholder="Adam Smith">
-      </div>
-      
-      `
-
-    }else if(e.target.value == "rdv"){
-      complement.innerHTML = 
-      `
+      fetch("https://firestore.googleapis.com/v1/projects/ingrwf09/databases/(default)/documents/cours")
+      .then(response => response.json())
+      .then(response => {
+      complement.innerHTML = `
       <label class="label">Formation que vous suivez</label>
       <div class="control">
-      <select name="formation"  id="raison">
-          <option value="ux">UX/UI les bests</option>
-          <option value="front">Front-end les boss</option>
-          <option value="back">back-end les buses</option>
-        </select>
+      <select name="complement" class="select"  id="raison">
+      </select>
+      </div>
+      `
+        select = document.querySelector(".select")
+        let cours = response.documents
+        cours.forEach(e => {
+          select.innerHTML += `
+          <option value = "${e.fields.label.stringValue}">${e.fields.label.stringValue}</option>
+          `
+        });
+        
+
+
+
+      })
+    }else if(e.target.value == "rdv"){
+      complement.innerHTML = 
+   `
+      <label class="label">Qui souhaitez vous rencontrer</label>
+      <div class="control">
+        <input class="input" name="complement" type="text" placeholder="Adam Smith">
       </div>
       `
     }
@@ -46,7 +56,6 @@ complement.addEventListener("keyup", e => {
       let results = response.documents
       for (let i = 0; i < results.length; i++) {
           let prenom = results[i].fields.prenom.stringValue
-          console.log(e.target.value)
           if(prenom.includes(e.target.value)){
           let nom = results[i].fields.nom.stringValue
           list_qui.innerHTML += `<li data-id="${i}" class="list-item list_qui-item">${prenom} ${nom} </li>`
@@ -59,6 +68,6 @@ complement.addEventListener("keyup", e => {
 list_qui.addEventListener("click", e => {
   e.preventDefault
   if(e.target.classList.contains("list_qui-item")){
-    console.log("hello")
+    complement.childNodes[3].childNodes[1].value = e.target.innerHTML
   }
 })
