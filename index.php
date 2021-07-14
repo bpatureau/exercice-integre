@@ -1,9 +1,14 @@
 <?php require("config.php");?>
 <?php include("header.php");?>
+<?php     
+?>
 <?php if ( isset($_GET['view']) ):
     switch ($_GET['view']) :
         case "form" :
             include("form.php");
+            break;
+            case "etiquette" :
+                include("etiquette.php");
             break;
         default :
             include("home.php");

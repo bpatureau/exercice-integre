@@ -1,8 +1,8 @@
 <?php
 define('DB_HOST','localhost');
-define('DB_USER', 'u868520261_ingrwf09');
-define('DB_PASS','Ingrwf09');
-define('DB_NAME','u868520261_ingrwf09');
+define('DB_USER', 'root');
+define('DB_PASS','');
+define('DB_NAME','cepegra_exercice_integre');
 
 define('MODE','dev'); // dev ou prod
 

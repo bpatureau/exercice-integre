@@ -1,11 +1,11 @@
-let form = document.querySelector(".form")
+let form_raison = document.querySelector(".form_raison")
 let complement = document.querySelector(".complement")
 
 //si il y a un changement dans l'input des raisons de visite, affiche la deuxième partie du formualaire qui correspond
-form.addEventListener("change", e => {
+form_raison.addEventListener("change", e => {
   e.preventDefault;
   list_qui.innerHTML= ''
-  if(e.target.classList.contains("form_raison")){
+
     if(e.target.value == "formation"){
       fetch("https://firestore.googleapis.com/v1/projects/ingrwf09/databases/(default)/documents/cours")
       .then(response => response.json())
@@ -41,7 +41,6 @@ form.addEventListener("change", e => {
     else{
       complement.innerHTML = ``
     }
-  }
 })
 
 //affichage de la liste du personnel dont le prénom contient le contenu de l'input
