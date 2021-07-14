@@ -1,7 +1,19 @@
 <?php 
     require_once("config.php");
-    $get_user = sprintf("SELECT * FROM `bp_users` WHERE email='%s'",
-      $_POST['email']
+
+    if( isset($_POST['add_user']) ) :    
+      $email = $_POST['email'];
+      $sql = sprintf("INSERT INTO `bp_users` (`nom`, `prenom`, `email`) VALUES ('%s', '%s', '%s')",
+          addslashes($_POST['nom']),
+          addslashes($_POST['prenom']),
+          addslashes($_POST['email']));
+      $connect->query($sql);
+      echo $connect->error;
+      $last_id = $connect->insert_id;
+  endif;
+  if(isset($_POST['email'])):
+  $get_user = sprintf("SELECT * FROM `bp_users` WHERE email='%s'",
+  $_POST['email']
     );
     $user = $connect->query($get_user);
     echo $connect->error;
@@ -10,16 +22,7 @@
         $user_elements[] = $oneElement;
       endwhile;
     endif;
-    if( isset($_POST['add_user']) ) :    
-      $email = $_POST['email'];
-      $sql = sprintf("INSERT INTO `bp_users` (`nom`, `prenom`, `email`) VALUES ('%s', '%s', '%s')",
-          addslashes($_POST['nom']),
-          addslashes($_POST['prenom']),
-          addslashes($email));
-      $connect->query($sql);
-      echo $connect->error;
-      $last_id = $connect->insert_id;
-  endif;
+
     if( isset($_POST['add_raison']) ) :
       if($_POST['raison'] === "Suivre une formation") :
         $raison = 2;
@@ -36,6 +39,7 @@
       $last_id = $connect->insert_id;
 
   endif;
+endif;
 ?>
 
 <form method="post" class="form" action="form">
