@@ -1,14 +1,34 @@
 <?php 
     require_once("config.php");
+    $get_user = sprintf("SELECT * FROM `bp_users` WHERE email='%s'",
+      $_POST['email']
+    );
+    $user = $connect->query($get_user);
+    echo $connect->error;
+    if($user->num_rows > 0):
+      while($oneElement = $user->fetch_array()):
+        $user_elements[] = $oneElement;
+      endwhile;
+    endif;
+    if( isset($_POST['add_user']) ) :    
+      $email = $_POST['email'];
+      $sql = sprintf("INSERT INTO `bp_users` (`nom`, `prenom`, `email`) VALUES ('%s', '%s', '%s')",
+          addslashes($_POST['nom']),
+          addslashes($_POST['prenom']),
+          addslashes($email));
+      $connect->query($sql);
+      echo $connect->error;
+      $last_id = $connect->insert_id;
+  endif;
     if( isset($_POST['add_raison']) ) :
       if($_POST['raison'] === "Suivre une formation") :
         $raison = 2;
         else :
           $raison = 1;
       endif;
-      $sql = sprintf("INSERT INTO `bp_visite` (`idRaison`, `emailUser`, `objetRaison`) VALUES ('%d', '%s', '%s')",
+      $sql = sprintf("INSERT INTO `bp_visite` (`idRaison`, `idUsers`, `objetRaison`) VALUES ('%d', '%d', '%s')",
           addslashes($raison),
-          addslashes($email),
+          addslashes($user_elements[0][0]),
           addslashes($_POST['complement'])
       );
       $connect->query($sql);

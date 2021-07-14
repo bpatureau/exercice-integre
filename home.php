@@ -1,16 +1,7 @@
 <?php
   require_once("config.php");
-  if( isset($_POST['add_user']) ) :    
-    $email = $_POST['email'];
-    myPrint_r($email);
-    $sql = sprintf("INSERT INTO `bp_users` (`nom`, `prenom`, `email`) VALUES ('%s', '%s', '%s')",
-        addslashes($_POST['nom']),
-        addslashes($_POST['prenom']),
-        addslashes($email));
-    $connect->query($sql);
-    echo $connect->error;
-    $last_id = $connect->insert_id;
-endif;
+
+
 ?>
 <form method="post" action="form" class="form form_main">
 <div class="field">
