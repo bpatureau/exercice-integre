@@ -3,19 +3,8 @@
     if( isset($_POST['add_user']) ) :    
       $_SESSION['nomUser'] = $_POST['nom'];
       $_SESSION['prenomUser'] = $_POST['prenom'];
-      $_SESSION['emailUser'] = $_POST['email'];
-      $sql = sprintf("INSERT INTO `bp_users` (`nom`, `prenom`, `email`) VALUES ('%s', '%s', '%s')",
-          addslashes($_POST['nom']),
-          addslashes($_POST['prenom']),
-          addslashes($_POST['email']));
-      $connect->query($sql);
-      echo $connect->error;
-      $last_id = $connect->insert_id;
-      $sql = sprintf("INSERT INTO bp_visite SET idUsers = %d" ,
-      $last_id);
-    $connect->query($sql);
-    echo $connect->error;
-    $last_id = $connect->insert_id;
+      $_SESSION['email'] = $_POST['email'];
+
   endif;
 ?>
 
@@ -37,7 +26,7 @@
   <input type="hidden" name="add_raison">
   <input type="hidden" class="personnel" name="idPersonnel" value="">
   <input type="hidden" class="planning" name="planning" value="">
-  <input type="hidden" name="idVisite" value="<?php echo $last_id?>">
+
   <button class="button is-primary">Confirmer</button>
 </form>
 <script src="script/form.js"></script>

@@ -1,22 +1,24 @@
 <?php 
     require_once("config.php");
-    if( isset($_POST['complement']) ) :  
+    if( isset($_POST['complement']) ) :
       $sql = sprintf("INSERT INTO `bp_users` (`nom`, `prenom`, `email`) VALUES ('%s', '%s', '%s')",
       addslashes($_SESSION['nomUser']),
       addslashes($_SESSION['prenomUser']),
-      addslashes($_SESSION['emailUser']));
+      addslashes($_SESSION['email']));
     $connect->query($sql);
     echo $connect->error;
     $last_id = $connect->insert_id;
+    $_SESSION['idUser'] = $last_id;
     $sql = sprintf("INSERT INTO bp_visite SET idUsers = %d" ,
-    $last_id);
+    $_SESSION['idUser']);
   $connect->query($sql);
   echo $connect->error;
   $last_id = $connect->insert_id;  
+  $_SESSION['idVisite'] = $last_id;
       $sql = sprintf("UPDATE `bp_visite` SET `dateHeureDepart` = NULL, `planning` = '%s', `idPersonnel` = '%s' WHERE `bp_visite`.`idVisite` = '%s'",
           addslashes($_POST['planning']),
           addslashes($_POST['idPersonnel']),
-          addslashes($_POST['idVisite'])
+          addslashes($_SESSION['idVisite'])
         );
       $connect->query($sql);
       echo $connect->error;
@@ -24,7 +26,7 @@
     echo $connect->error;
     endif;
     $sql = sprintf("SELECT planning, idPersonnel, idUsers FROM bp_visite WHERE idVisite='%d'",
-    addslashes($_POST['idVisite'])
+    addslashes($_SESSION['idVisite'])
   );
   $rq = $connect->query($sql);
   echo $connect->error;
@@ -76,7 +78,7 @@ if(isset($_SESSION['idPersonnel']) && !empty($_SESSION['idPersonnel'])) :
   <p>Salle du cours: <?php echo $data->fields->salle->stringValue; ?></p>
     <?php endif;?>
     <form action="etiquette">
-      <input type="hidden" class="personnel" name="idPersonnel" value=`time()`>
+      <input type="hidden" class="personnel" name="idPersonnel" value= "time()">
       <button>sortie</button>
     </form>
     <script src="script/etiquette.js"></script>
