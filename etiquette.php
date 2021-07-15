@@ -1,7 +1,18 @@
 <?php 
     require_once("config.php");
-
-    if( isset($_POST['complement']) ) :    
+    if( isset($_POST['complement']) ) :  
+      $sql = sprintf("INSERT INTO `bp_users` (`nom`, `prenom`, `email`) VALUES ('%s', '%s', '%s')",
+      addslashes($_SESSION['nomUser']),
+      addslashes($_SESSION['prenomUser']),
+      addslashes($_SESSION['emailUser']));
+    $connect->query($sql);
+    echo $connect->error;
+    $last_id = $connect->insert_id;
+    $sql = sprintf("INSERT INTO bp_visite SET idUsers = %d" ,
+    $last_id);
+  $connect->query($sql);
+  echo $connect->error;
+  $last_id = $connect->insert_id;  
       $sql = sprintf("UPDATE `bp_visite` SET `dateHeureDepart` = NULL, `planning` = '%s', `idPersonnel` = '%s' WHERE `bp_visite`.`idVisite` = '%s'",
           addslashes($_POST['planning']),
           addslashes($_POST['idPersonnel']),
@@ -64,5 +75,8 @@ if(isset($_SESSION['idPersonnel']) && !empty($_SESSION['idPersonnel'])) :
   <p>cours: <?php echo $datacours->fields->label->stringValue; ?></p>
   <p>Salle du cours: <?php echo $data->fields->salle->stringValue; ?></p>
     <?php endif;?>
-    <form action=""></form>
+    <form action="etiquette">
+      <input type="hidden" class="personnel" name="idPersonnel" value=`time()`>
+      <button>sortie</button>
+    </form>
     <script src="script/etiquette.js"></script>

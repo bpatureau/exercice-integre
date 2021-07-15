@@ -1,6 +1,9 @@
 <?php 
     require_once("config.php");
     if( isset($_POST['add_user']) ) :    
+      $_SESSION['nomUser'] = $_POST['nom'];
+      $_SESSION['prenomUser'] = $_POST['prenom'];
+      $_SESSION['emailUser'] = $_POST['email'];
       $sql = sprintf("INSERT INTO `bp_users` (`nom`, `prenom`, `email`) VALUES ('%s', '%s', '%s')",
           addslashes($_POST['nom']),
           addslashes($_POST['prenom']),
