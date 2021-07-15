@@ -10,6 +10,9 @@
             case "etiquette" :
                 include("etiquette.php");
             break;
+            case "sortie" :
+                include("sortie.php");
+            break;
         default :
             include("home.php");
     endswitch;

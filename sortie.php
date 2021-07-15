@@ -1,30 +1,5 @@
 <?php 
     require_once("config.php");
-    if( isset($_POST['complement']) ) :
-      $sql = sprintf("INSERT INTO `bp_users` (`nom`, `prenom`, `email`) VALUES ('%s', '%s', '%s')",
-      addslashes($_SESSION['nomUser']),
-      addslashes($_SESSION['prenomUser']),
-      addslashes($_SESSION['email']));
-    $connect->query($sql);
-    echo $connect->error;
-    $last_id = $connect->insert_id;
-    $_SESSION['idUser'] = $last_id;
-    $sql = sprintf("INSERT INTO bp_visite SET idUsers = %d" ,
-    $_SESSION['idUser']);
-  $connect->query($sql);
-  echo $connect->error;
-  $last_id = $connect->insert_id;  
-  $_SESSION['idVisite'] = $last_id;
-      $sql = sprintf("UPDATE `bp_visite` SET `dateHeureDepart` = NULL, `planning` = '%s', `idPersonnel` = '%s' WHERE `bp_visite`.`idVisite` = '%s'",
-          addslashes($_POST['planning']),
-          addslashes($_POST['idPersonnel']),
-          addslashes($_SESSION['idVisite'])
-        );
-      $connect->query($sql);
-      echo $connect->error;
-    $connect->query($sql);
-    echo $connect->error;
-    endif;
     $sql = sprintf("SELECT planning, idPersonnel, idUsers FROM bp_visite WHERE idVisite='%d'",
     addslashes($_SESSION['idVisite'])
   );
@@ -48,13 +23,16 @@ if ($rq->num_rows > 0) {
     $_SESSION['prenomUser'] = $row["prenom"];
   }
 }
-$connect->close();
-
+$time = date('Y-m-d H:i:s');
+myPrint_r($time);
 if(isset($_POST['sortie'])):
-  $sql = sprintf("UPDATE `bp_visite` SET `dateHeureDepart` = %s WHERE `bp_visite`.`idVisite` = '%d'",
-          time('Y-m-d H:i:s'),
+  myPrint_r($time);
+  $sql = sprintf("UPDATE `bp_visite` SET `dateHeureDepart` = '%s'  WHERE `bp_visite`.`idVisite` = %d",
+          $time,
           addslashes($_SESSION['idVisite'])
         );
+        $connect->query($sql);
+        echo $connect->error;
 endif;
 if(isset($_SESSION['idPersonnel']) && !empty($_SESSION['idPersonnel'])) :
   $url = $_SESSION['idPersonnel'];
@@ -82,8 +60,4 @@ if(isset($_SESSION['idPersonnel']) && !empty($_SESSION['idPersonnel'])) :
   <p>cours: <?php echo $datacours->fields->label->stringValue; ?></p>
   <p>Salle du cours: <?php echo $data->fields->salle->stringValue; ?></p>
     <?php endif;?>
-    <form action="sortie" method="post">
-      <input type="hidden" class="sortie" name="sortie">
-      <button>sortie</button>
-    </form>
     <script src="script/etiquette.js"></script>
